@@ -7,10 +7,20 @@ import pyaudio
 import sounddevice as sd
 import soundfile as sf
 from scipy.io.wavfile import write
+import winsound
 
-fs = 44100  # Sample rate
-seconds = 3  # Duration of recording
+# how to play sound on windows
+# input is the filename
+def play_sound(filename):
+    winsound.PlaySound(filename, winsound.SND_FILENAME)
 
-myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=2)
-sd.wait()  # Wait until recording is finished
-write('output.wav', fs, myrecording)  # Save as WAV file 
+# record using the mic 
+# the inputs are the name of the file and the length of the file
+def recording(filename="output", length=3):
+
+    fs = 44100  # Sample rate
+    seconds = length  # Duration of recording
+
+    myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=2)
+    sd.wait()  # Wait until recording is finished
+    write('{}.wav'.format(filename), fs, myrecording)  # Save as WAV file 
